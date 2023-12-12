@@ -1,0 +1,55 @@
+class Bus:
+    def __init__(self, number, capacity):
+        self.number = number
+        self.capacity = capacity
+        self.current_passengers = 0
+        self.passengers = []
+
+    def book_seat(self, passenger):
+        if self.current_passengers < self.capacity:
+            self.passengers.append(passenger)
+            self.current_passengers += 1
+            return True
+        else:
+            return False
+
+    def cancel_seat(self, passenger):
+        if passenger in self.passengers:
+            self.passengers.remove(passenger)
+            self.current_passengers -= 1
+            return True
+        else:
+            return False
+
+class Passenger:
+    def __init__(self, name, phone):
+        self.name = name
+        self.phone = phone
+
+def create_bus(number, capacity):
+    return Bus(number, capacity)
+
+def create_passenger(name, phone):
+    return Passenger(name, phone)
+
+def book_seat(bus, passenger):
+    return bus.book_seat(passenger)
+
+def cancel_seat(bus, passenger):
+    return bus.cancel_seat(passenger)
+
+# example usage
+bus = create_bus(101, 30)
+passenger1 = create_passenger('Alice', '1234567890')
+passenger2 = create_passenger('Bob', '0987654321')
+
+book_seat(bus, passenger1) # True
+book_seat(bus, passenger2) # True
+
+print(bus.passengers) # [Passenger('Alice', '1234567890'), Passenger('Bob', '0987654321')]
+print(bus.current_passengers) # 2
+
+cancel_seat(bus, passenger1) # True
+
+print(bus.passengers) # [Passenger('Bob', '0987654321')]
+print(bus.current_passengers) # 1
